@@ -67,14 +67,14 @@ def save_history(entry):
 #moodfinding
 
 def calculate_mood_score():
-  print("\n answer honestly (1 = No, 2= Yes): ")
-  q1 = int(input("do you feel energetic today? "))
-  q2 = int(input("do you feel calm and peaceful? "))
-  q3 = int(input("do you feel sad or low? "))
-  q4 = int(input("are you excited or happy? "))
-  q5 = int(input("do you need to focus on your tasks? "))
-  q6 = int(input("are you feeling retro? "))
-  q7 = int(input("are you feeling romantic? "))
+  print("\nAnswer honestly (1 = No, 2= Yes): ")
+  q1 = int(input("\nDo you feel energetic today? "))
+  q2 = int(input("Do you feel calm and peaceful? "))
+  q3 = int(input("Do you feel sad or low? "))
+  q4 = int(input("Are you excited or happy? "))
+  q5 = int(input("Do you need to focus on your tasks? "))
+  q6 = int(input("Are you feeling retro? "))
+  q7 = int(input("Are you feeling romantic? "))
   scores = {
     "energetic": q1 + q4,
     "relax": q2,
@@ -99,33 +99,33 @@ def generate_playlist(mood,count=3):
 #main finction
 
 def main():
- print("===")
- print("MOOD MUSIC RECOMMENDER")
- print("===")
+  print("===")
+  print("MOOD MUSIC RECOMMENDER")
+  print("===")
 
-name = input("enter your name: ")
-mood, score = calculate_mood_score()
-playlist = generate_playlist(mood)
+  name = input("Enter your name: ")
+  mood, score = calculate_mood_score()
+  playlist = generate_playlist(mood)
 
-print("\n based on your mood, we detected: ")
-print(f"--> mood: {mood.upper()} (score: {score})")
-print("\n your generated playlist:")
-for i, song in enumerate(playlist, 1):
-  print(f"{i}. {song}")
-    
-    #save history
-entry = {
-      "name": name ,
-      "mood": mood,
-      "score": score,
-      "playlist": playlist,
-      "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    }
-save_history(entry)
-print("\nyour playlist has been saved to history.")
-print("run again to build new mood patterns")
-print("thank you for using")
+  print("\n based on your mood, we detected: ")
+  print(f"--> mood: {mood.upper()} (score: {score})")
+  print("\n your generated playlist:")
+  for i, song in enumerate(playlist, 1):
+    print(f"{i}. {song}")
+      
+      #save history
+  entry = {
+        "name": name ,
+        "mood": mood,
+        "score": score,
+        "playlist": playlist,
+        "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+      }
+  save_history(entry)
+  print("\nYour playlist has been saved to history.")
+  print("Run again to build new mood patterns")
+  print("Thank you for using")
     
     #run
 if __name__ == "__main__":
-   main()
+  main()
