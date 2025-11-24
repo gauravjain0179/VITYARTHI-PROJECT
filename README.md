@@ -1,138 +1,111 @@
-# MUSIC RECCOMENDER BY MOOD
-Most music applications require network and advanced connectivity and coding and advanced ML applications for detection of mood.  However beginners need a program that works offline, is easy to understand, uses basic python that generates music playlists without needing any external library THIS IS
+Mood-Based Music Recommender 
 
 
 
-CODE OF TTHE PROGRAM
+Author: Gaurav Jain (25BET10044)
 
-#mood-basedmusic detector 
-#by gaurav jain 25BET10044
-import json
-import random
-from datetime import datetime
-import os
+For: Vityarthi Project
 
-#content
 
-music_db= {
-  "happy": [
-    "gallan goodiyan",
-    "aaj mai upar",
-    "lover-taylor swift",
-    "yellow-coldplay"
-    ],
-  "sad": [
-    "maa",
-    "agar tum sath ho-arijit singh",
-    "daylight",
-    "how soon is now-the smiths"
-    ],
-  "relax": [
-    "kabira-pritam",
-    "tumse hi-mohit chauhan",
-    "sparks-coldplay",
-    "video game-lanadel ray"
-    ],
-  "focus": [
-    "bandeya re bandeya",
-     "mast magan",
-    "sparks"
-    ],
-  "energetic": [
-    "believer",
-    "thodi si daaru",
-    "sapphire",
-    "wavin flag"
-    ],
-  "old": [
-    "lag ja gale",
-    "kal chaudhvi ki raat thi"
-    ],
-  "romantic": [
-    "i wanna be yours",
-    "brooklyn baby",
-    "k",
-    "rang sharbaton ka"] 
-    
-}
-#history
+Overview
 
-history_file = "music_history.json"
+This project is a simple, offline Python-based system that recommends songs based on the user's mood. It uses a question-based input system and a rule-based AI scoring method to detect emotions and generate curated playlists. No external installations, API keys, or internet connection are required.
 
-def load_history():
-  if not os.path.exists(history_file):
-    return[]
-  with open(history_file, "r") as f:
-    return json.load(f)
-    
-def save_history(entry):
-  history = load_history()
-  history.append(entry)
-  with open(history_file, "w") as f:
-    json.dump(history, f, indent=4)
-    
-#moodfinding
 
-def calculate_mood_score():
-  print("\n answer honestly (1 = No, 2= Yes): ")
-  q1 = int(input("do you feel energetic today? "))
-  q2 = int(input("do you feel calm and peaceful? "))
-  q3 = int(input("do you feel sad or low? "))
-  q4 = int(input("are you excited or happy? "))
-  q5 = int(input("do you need to focus on your tasks? "))
-  q6 = int(input("are you feeling retro? "))
-  q7 = int(input("are you feeling romantic? "))
-  scores = {
-    "energetic": q1 + q4,
-    "relax": q2,
-    "sad": q3*2,
-    "happy": q4,
-    "focus": q5,
-    "old": q6 + q2,
-    "romantic": q7+ q4
-   } 
-  #deciding mood
-   mood = max(scores, key=scores.get)
-  return mood, scores[mood]
-  
-#generate playlist
+Features
 
-def generate_playlist(mood,count=3):
-  songs = music_db.get(mood, [])
-  if len(songs) <=count:
-    return songs
-  return random.sample(songs, count)
-  
-#main finction
+Completely Offline: Works without an internet connection.
 
-def main():
- print("===")
- print("MOOD MUSIC RECOMMENDER")
- print("===")
+Interactive Questionnaire: mood detection based on user answers.
 
-name = input("enter your name: ")
-mood, score = calculate_mood_score()
-playlist = generate_playlist(mood)
+Rule-Based AI: Uses a scoring algorithm to determine the dominant mood.
 
-print("\n based on your mood, we detected: ")
-print(f"--> mood: {mood.upper()} (score: {score})")
-print("\n your generated playlist:")
-for i, song in enumerate(playlist, 1):
-  print(f"{i}. {song}")
-    
-    #save history
-entry = {
-      "name": name ,
-      "mood": mood,
-      "score": score,
-      "playlist": playlist,
-      "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    }
-save_history(entry)
-print("\nyour playlist has been saved to history.")
-print("run again to build new mood patterns")
-print("thank you for using")
-    
-    #run
-if __name__ == "__main__":
-   main()
+Smart Playlist Generation: Randomly selects songs from a predefined local database.
+
+History Tracking: Automatically saves user sessions to a JSON file.
+
+Modular Code: Clean structure separated into data, logic, and storage.
+
+
+Project Structure
+
+mood-music-recommender/
+│
+├── main.py   # Main application script
+├── music_history.json          # Stores user session history (Auto-created)
+└── README.md                   # Project documentation
+
+
+How It Works
+
+Input: The user answers 7 mood-related questions (e.g., "Do you feel energetic?").
+
+Scoring: The system assigns points to categories like Happy, Sad, Relax, Energetic, and Focus.
+
+Detection: The algorithm compares scores; the highest score determines the current mood.
+
+Recommendation: A playlist is generated from the internal database matching the detected mood.
+
+Storage: The session (Name, Mood, Score, Playlist, Time) is saved to music_history.json.
+
+
+How to Run
+
+Prerequisites: Ensure you have Python 3.x installed.
+
+Download: Download the project folder.
+
+Run the script:
+
+python main.py
+
+
+
+Follow Instructions: Enter 1 for NO and 2 for YES when prompted.
+
+Technologies Used
+
+Python 3: Core programming language.
+
+JSON: For lightweight, persistent data storage.
+
+Datetime: For timestamping user sessions.
+
+Random: For shuffling and selecting songs.
+
+
+Data Storage
+
+User history is stored in music_history.json in the following format:
+
+User Name
+
+Detected Mood
+
+Mood Score
+
+Recommended Playlist
+
+Timestamp
+
+
+
+Design Decisions
+
+Question-Based Detection: Chosen for simplicity and ease of use in offline environments.
+
+JSON Storage: Selected over SQL databases to keep the project lightweight and portable.
+
+Internal Music List: Removes the dependency on Spotify/YouTube APIs, ensuring the project works 100% offline.
+
+
+
+Future Enhancements
+
+[ ] GUI Interface: Upgrade from CLI to a graphical interface using Tkinter.
+
+[ ] Music Autoplay: Play songs directly using the playsound or pygame library.
+
+[ ] Sentiment Analysis: Allow users to type how they feel and use NLP to detect mood.
+
+[ ] Cloud Integration: Sync history with online music platforms.
