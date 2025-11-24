@@ -1,5 +1,4 @@
 # Mood-Based Music Recommender
-### Offline AI Project
 
 **Author:** Gaurav Jain (25BET10044)
 **For:** Vityarthi Project
